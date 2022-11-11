@@ -1,0 +1,14 @@
+erstes zwischenProjekt:
+links-rechts-schlag erkennung über den 33 BLE Sense und colab.
+Ausgabe über Tastatur Lib an PC für games etc.
+
+actually working!
+
+own Projekt:
+https://drive.google.com/drive/folders/1Y9JjjoLvUA_5oXEF9H44dSvq8g0UsNB6?usp=sharing
+
+tutorials from last year:
+https://drive.google.com/drive/folders/1NndgwyJ2-06oK7c9RLNRKmoR5Ua0PXwI?usp=sharing
+
+gestenerkennung funktionert für schlag vs seitlich.
+links rechts nicht, vlt mehr daten?

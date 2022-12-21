@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 # validates wether the position of the splitting points actually correspond to the splitting points in the original dataset (csv_file)
-def val_split_pos(split = np.array, csv_file = np.array, collumn = 0):
+def val_split_pos(split = {}, csv_file = np.array, collumn = 0):
     i=0
-    while(split.size > i):
-        if ((split[collumn][i]  != csv_file[collumn][i])):
+    while(csv_file.size > i):
+        if ((i in split) and (np_array[collumn][i]) ):
             return False
         i += 1
     return True
@@ -27,7 +27,7 @@ while(len(np_array) > row):
     if(np_array[row][collumn] < min_aX):
         splits[row] = np_array[row][collumn]
     row += 1
-print("{},{}".format(splits , len(splits)))
+print("{},{},{}".format(splits , len(splits), csv_file.size))
 # print(splits[3360])
 
 # print('Values fit: {} | any Values found: {} | doubled Values: {}'.format(val_split_pos(splits, csv_file), splits.size, val_multiple()) )

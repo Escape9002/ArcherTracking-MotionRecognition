@@ -116,47 +116,46 @@ def run_split(path, min_aX = -15.00, collumn = 0, save = True, filename = "noNam
 ########## THE REAL PROGRAMM #####################
 ##################################################
 
-# path =  'data/2451_Shooting.csv'
-# csv_file = pd.read_csv(path)
-# np_array = csv_file.to_numpy()
+path =  'data/2451_Shooting.csv'
+csv_file = pd.read_csv(path)
+np_array = csv_file.to_numpy()
 
-# min_aX = -15.00
-# collumn = 0
-# normalized_splits = []
+min_aX = -15.00
+collumn = 0
+normalized_splits = []
 
-# normalized_splits = normal_splitting(collumn, min_aX, np_array, benchmark=True)
-# splitted_dataset = split_data_iterative(np_array, normalized_splits, benchmark=True)
+normalized_splits = normal_splitting(collumn, min_aX, np_array, benchmark=True)
+splitted_dataset = split_data_iterative(np_array, normalized_splits, benchmark=True)
 
-# show_dataset(splitted_dataset,0,len(splitted_dataset), benchmark=True)
-# save_dataset("2451", splitted_dataset, benchmark=True)
+show_dataset(splitted_dataset,0,len(splitted_dataset), benchmark=True)
+save_dataset("2451", splitted_dataset, benchmark=True)
 
 # ####################################################
 # print("########### ANOTHER FILE ####################")
 # ####################################################
 
-# path =  'data/4455_Shooting.csv'
-# csv_file = pd.read_csv(path)
-# np_array = csv_file.to_numpy()
+path =  'data/830_Shooting.csv'
+csv_file = pd.read_csv(path)
+np_array = csv_file.to_numpy()
 
-# min_aX = -15.00
-# collumn = 0
-# normalized_splits = []
+min_aX = -15.00
+collumn = 0
+normalized_splits = []
 
-# normalized_splits = normal_splitting(collumn, min_aX, np_array, benchmark=True)
-# splitted_dataset = split_data_iterative(np_array, normalized_splits, benchmark=True)
+normalized_splits = normal_splitting(collumn, min_aX, np_array, benchmark=True)
+splitted_dataset = split_data_iterative(np_array, normalized_splits, benchmark=True)
 
-# show_dataset(splitted_dataset,13,26, benchmark=True)
-# save_dataset("4455", splitted_dataset, benchmark=True)
+show_dataset(splitted_dataset,13,26, benchmark=True)
+save_dataset("4455", splitted_dataset, benchmark=True)
 
 ##################################################
 ############### Automatization ###################
 ##################################################
 
+# filenames = listdir("data/")
+# csv_files =  [ filename for filename in filenames if filename.endswith( ".csv" ) ]
 
-filenames = listdir("data/")
-csv_files =  [ filename for filename in filenames if filename.endswith( ".csv" ) ]
-
-for file in csv_files:
-    filename = ''.join(filter(str.isdigit, file))
-    print("Processing file: {}".format(filename))
-    run_split("data/{}".format(file), filename = filename, del_f=0, del_l=13)
+# for file in csv_files:
+#     filename = ''.join(filter(str.isdigit, file))
+#     print("Processing file: {}".format(filename))
+#     run_split("data/{}".format(file), filename = filename, del_f=0, del_l=13)

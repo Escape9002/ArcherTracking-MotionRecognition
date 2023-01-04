@@ -67,14 +67,24 @@ def save_dataset(filename = "",splitted_dataset = [], header = ["aX","aY","aZ"],
 
 
 
-def show_dataset(splitted_dataset = [],benchmark = False):
+def show_dataset(splitted_dataset = [], del_f=0,del_l=1,benchmark = False):
     if benchmark: start = time.perf_counter()
+    if del_l > len(splitted_dataset):
+        print("Choose smaller del_l")
+        return
+
     print("Found Datasets: {}".format(len(splitted_dataset)))
 
-    fig, axs = plt.subplots(len(splitted_dataset), sharex=True, sharey=True)
-    for i in range(len(splitted_dataset)):
-        axs[i].plot(splitted_dataset[i])
-        axs[i].set_title("splitted_dataset {}".format(i))
+    fig, axs = plt.subplots((del_l-del_f), sharex=True, sharey=True)
+    
+    axis = 0
+    while (del_f < del_l):
+        axs[axis].plot(splitted_dataset[del_f])
+        axs[axis].set_title("splitted_dataset {}".format(del_f))
+        print(del_f)
+        del_f += 1
+        axis += 1
+
     plt.show()
     if benchmark: print("show_dataset t: {}".format(time.perf_counter()-start))
 
@@ -93,8 +103,8 @@ normalized_splits = []
 normalized_splits = normal_splitting(collumn, min_aX, np_array, benchmark=True)
 splitted_dataset = split_data_iterative(np_array, normalized_splits, benchmark=True)
 
-# show_dataset(splitted_dataset, benchmark=True)
-save_dataset("4455", splitted_dataset, benchmark=True)
+show_dataset(splitted_dataset,0,len(splitted_dataset), benchmark=True)
+# save_dataset("4455", splitted_dataset, benchmark=True)
 
 ####################################################
 print("########### ANOTHER FILE ####################")
@@ -111,5 +121,5 @@ normalized_splits = []
 normalized_splits = normal_splitting(collumn, min_aX, np_array, benchmark=True)
 splitted_dataset = split_data_iterative(np_array, normalized_splits, benchmark=True)
 
-# show_dataset(splitted_dataset, benchmark=True)
-save_dataset("4455", splitted_dataset, benchmark=True)
+show_dataset(splitted_dataset,13,26, benchmark=True)
+# save_dataset("4455", splitted_dataset, benchmark=True)

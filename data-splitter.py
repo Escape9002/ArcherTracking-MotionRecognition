@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 import csv
+from os import listdir
+# from os.path import isfile, join
 
 import time
 
@@ -39,6 +41,7 @@ def normal_splitting(collumn = 0, min_aX = -15.00, np_array = np.array, splits =
     if benchmark: print("normalsplittimg t: {}".format(time.perf_counter()-start))
     return del_val_multiple(splits)
 
+# creates a dataset (list with the arrays ranging from one split to another starting at 0), uses no numpy-function
 def split_data_iterative(np_array = np.array, splits = [], benchmark = False):
     if benchmark: start = time.perf_counter()
 
@@ -52,7 +55,8 @@ def split_data_iterative(np_array = np.array, splits = [], benchmark = False):
     
     if benchmark: print("splitdataez: {}".format(time.perf_counter()-start))
     return splitted
-    
+
+# saves list of array as csv files (header = "aX","aY","aZ" )
 def save_dataset(filename = "",splitted_dataset = [], header = ["aX","aY","aZ"], benchmark = False):
     if benchmark: start = time.perf_counter()
     i = 0
@@ -65,15 +69,14 @@ def save_dataset(filename = "",splitted_dataset = [], header = ["aX","aY","aZ"],
         i += 1
     if benchmark: print("save_dataset t: {}".format(time.perf_counter()-start))
 
-
-
+# shows dataset via pyplot from del_f to del_l, throws error if del_l is out of bounds for the given dataset
 def show_dataset(splitted_dataset = [], del_f=0,del_l=1,benchmark = False):
     if benchmark: start = time.perf_counter()
+
+    print("Found Datasets: {}".format(len(splitted_dataset)))
     if del_l > len(splitted_dataset):
         print("Choose smaller del_l")
         return
-
-    print("Found Datasets: {}".format(len(splitted_dataset)))
 
     fig, axs = plt.subplots((del_l-del_f), sharex=True, sharey=True)
     
@@ -88,38 +91,72 @@ def show_dataset(splitted_dataset = [], del_f=0,del_l=1,benchmark = False):
     plt.show()
     if benchmark: print("show_dataset t: {}".format(time.perf_counter()-start))
 
+# combines all functions into one usable splitter, can be used with a minimal input of the path for the file
+def run_split(path, min_aX = -15.00, collumn = 0, save = True, filename = "noNameGiven", del_f = 999 , del_l = 0, benchmark = False):
+    if (save and filename == "noNameGiven"): 
+        print("Choose filename please!")
+        return
+
+    csv_file = pd.read_csv(path)
+    np_array = csv_file.to_numpy()
+
+    normalized_splits = []
+
+    normalized_splits = normal_splitting(collumn, min_aX, np_array, benchmark = benchmark)
+    splitted_dataset = split_data_iterative(np_array, normalized_splits, benchmark = benchmark)
+
+    if not (del_f == 999):
+        if (del_l == 0): del_l = len(splitted_dataset)
+        show_dataset(splitted_dataset, del_f, del_l, benchmark = benchmark)
+
+    if save: save_dataset(filename, splitted_dataset, benchmark = benchmark)
+    
+
 ##################################################
 ########## THE REAL PROGRAMM #####################
 ##################################################
 
-path =  'data/2451_Shooting.csv'
-csv_file = pd.read_csv(path)
-np_array = csv_file.to_numpy()
+# path =  'data/2451_Shooting.csv'
+# csv_file = pd.read_csv(path)
+# np_array = csv_file.to_numpy()
 
-min_aX = -15.00
-collumn = 0
-normalized_splits = []
+# min_aX = -15.00
+# collumn = 0
+# normalized_splits = []
 
-normalized_splits = normal_splitting(collumn, min_aX, np_array, benchmark=True)
-splitted_dataset = split_data_iterative(np_array, normalized_splits, benchmark=True)
+# normalized_splits = normal_splitting(collumn, min_aX, np_array, benchmark=True)
+# splitted_dataset = split_data_iterative(np_array, normalized_splits, benchmark=True)
 
-show_dataset(splitted_dataset,0,len(splitted_dataset), benchmark=True)
+# show_dataset(splitted_dataset,0,len(splitted_dataset), benchmark=True)
+# save_dataset("2451", splitted_dataset, benchmark=True)
+
+# ####################################################
+# print("########### ANOTHER FILE ####################")
+# ####################################################
+
+# path =  'data/4455_Shooting.csv'
+# csv_file = pd.read_csv(path)
+# np_array = csv_file.to_numpy()
+
+# min_aX = -15.00
+# collumn = 0
+# normalized_splits = []
+
+# normalized_splits = normal_splitting(collumn, min_aX, np_array, benchmark=True)
+# splitted_dataset = split_data_iterative(np_array, normalized_splits, benchmark=True)
+
+# show_dataset(splitted_dataset,13,26, benchmark=True)
 # save_dataset("4455", splitted_dataset, benchmark=True)
 
-####################################################
-print("########### ANOTHER FILE ####################")
-####################################################
+##################################################
+############### Automatization ###################
+##################################################
 
-path =  'data/4455_Shooting.csv'
-csv_file = pd.read_csv(path)
-np_array = csv_file.to_numpy()
 
-min_aX = -15.00
-collumn = 0
-normalized_splits = []
+filenames = listdir("data/")
+csv_files =  [ filename for filename in filenames if filename.endswith( ".csv" ) ]
 
-normalized_splits = normal_splitting(collumn, min_aX, np_array, benchmark=True)
-splitted_dataset = split_data_iterative(np_array, normalized_splits, benchmark=True)
-
-show_dataset(splitted_dataset,13,26, benchmark=True)
-# save_dataset("4455", splitted_dataset, benchmark=True)
+for file in csv_files:
+    filename = ''.join(filter(str.isdigit, file))
+    print("Processing file: {}".format(filename))
+    run_split("data/{}".format(file), filename = filename, del_f=0, del_l=13)

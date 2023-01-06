@@ -53,7 +53,7 @@ def split_data_iterative(np_array = np.array, splits = [], benchmark = False):
         splitted.append(tmp)
         old = splits[i]
     
-    if benchmark: print("splitdataez: {}".format(time.perf_counter()-start))
+    if benchmark: print("splitdataiterative: {}".format(time.perf_counter()-start))
     return splitted
 
 # saves list of array as csv files (header = "aX","aY","aZ" )

@@ -127,7 +127,7 @@ normalized_splits = []
 normalized_splits = normal_splitting(collumn, min_aX, np_array, benchmark=True)
 splitted_dataset = split_data_iterative(np_array, normalized_splits, benchmark=True)
 
-show_dataset(splitted_dataset,0,len(splitted_dataset), benchmark=True)
+# show_dataset(splitted_dataset,0,len(splitted_dataset), benchmark=True)
 save_dataset("2451", splitted_dataset, benchmark=True)
 
 # ####################################################
@@ -145,7 +145,7 @@ normalized_splits = []
 normalized_splits = normal_splitting(collumn, min_aX, np_array, benchmark=True)
 splitted_dataset = split_data_iterative(np_array, normalized_splits, benchmark=True)
 
-show_dataset(splitted_dataset,13,26, benchmark=True)
+# show_dataset(splitted_dataset,13,26, benchmark=True)
 save_dataset("4455", splitted_dataset, benchmark=True)
 
 ##################################################
